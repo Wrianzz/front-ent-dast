@@ -1,38 +1,172 @@
-.App {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+    font-family: 'Red Hat Display', sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+  padding: 20px;
+  color: white;
+  background-color: #131620;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+header.navbar-container {
+  width: 100%;
+  padding-block: 1rem;
+  margin-inline: auto;
+  background-color: #131620;
+  position: sticky;
+  top: 0;
+  
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
+ 
+  z-index: 9999;
+}
+ 
+header.navbar-container .logo img {
+  width: 50px;
+}
+ 
+header.navbar-container .nav-list ul {
+  padding-left: 0;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 2rem 1rem;
+}
+
+header.navbar-container .nav-list li {
+  list-style-type: none;
+}
+
+header.navbar-container .nav-list li a {
+  padding: 0.5rem 1.5rem;
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 350;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+header.navbar-container .nav-list li:hover a {
+    font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.landing {
+    flex: 1;
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 8rem 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.landing .landing-description {
+  flex: 1 1;
+}
+
+.landing .landing-description .title {
+  margin-block: 1rem;
+  font-size: 3.5rem;
+}
+
+.landing .landing-description p {
+  font-size: 1.2rem;
+  line-height: 1.7rem;
+}
+
+.landing .landing-description button {
+  padding: 0.8rem 2.5rem;
+  border: 3px solid transparent;
+  border-radius: 15px;
+  margin-block-start: 1rem;
+  background-color: #131620;
+  font-family: 'Quicksand', sans-serif;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  transition: all 0.15s ease-in;
+}
+
+.landing .landing-description button:hover {
+  border: 3px solid #2d3e50;
+  background-color: transparent;
+  color: #2d3e50;
+}
+
+.landing .landing-image {
+  flex: 1;
+  display: flex;
+}
+
+.landing .landing-image img {
+  width: 300px;
+  min-width: 250px;
+  margin: auto;
+}
+
+.content {
+  padding: 5px;
+
+  width:fit-content;
+  display: flex;
+  
+  gap: 8px;
+}
+
+.card {
+  box-shadow: 2px 4px 8px 0 #02020263;
+  border-radius: 5px;
+ 
+  padding:5rem 0rem 5rem;
+}
+
+.card h2 {
+  text-align: center; 
+  font-size: 1.8rem; 
+  font-weight: bold; 
+  margin-bottom: 2rem; 
+}
+
+.card p {
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+  text-align: justify;
+  padding: 0rem 15rem;
+}
+
+@media (max-width: 900px) {
+  .landing {
+    flex-direction: column; /* Mengubah arah flex menjadi kolom */
+    align-items: center; /* Memusatkan konten */
   }
-  to {
-    transform: rotate(360deg);
+
+  .landing .landing-image {
+    flex: 0 0 50%; /* Mengatur ukuran gambar menjadi 50% dari ukuran awal */
+    display: flex;
+    justify-content: center; /* Memusatkan gambar */
+  }
+
+  .landing .landing-image img {
+    width: 50%; /* Mengatur lebar gambar menjadi 50% */
+    min-width: 125px; /* Sesuaikan min-width jika diperlukan */
+  }
+
+  .landing .landing-description {
+    margin-top: 20px; /* Memberikan jarak antara gambar dan deskripsi */
+    text-align: center; /* Memusatkan teks deskripsi */
+    flex: 1; /* Mengizinkan deskripsi untuk mengambil ruang yang tersisa */
   }
 }
