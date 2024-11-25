@@ -169,4 +169,70 @@ header.navbar-container .nav-list li:hover a {
     text-align: center; /* Memusatkan teks deskripsi */
     flex: 1; /* Mengizinkan deskripsi untuk mengambil ruang yang tersisa */
   }
+
+  .card p {
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    text-align: justify;
+    padding: 0rem 3rem;
+  }
 }
+
+.team-section {
+  padding: 3rem 2rem;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.team-title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+  color: #131620;
+}
+
+.team-cards {
+  display: flex;
+  justify-content: center; /* Memastikan card-card ada di tengah */
+  align-items: flex-start; /* Card sejajar di atas */
+  flex-wrap: wrap; /* Agar card turun ke baris berikutnya jika layar sempit */
+  gap: 2rem; /* Jarak antar-card */
+  max-width: 1200px; /* Memberikan batas maksimal lebar */
+  margin: 0 auto; /* Memusatkan secara horizontal */
+}
+
+.team-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: center;
+  width: 300px; /* Lebar setiap card */
+}
+
+.team-card img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.team-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.team-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 768px) {
+  .team-cards {
+    flex-direction: column; /* Semua card diatur vertikal */
+    align-items: center;
+  }
+}
+
+

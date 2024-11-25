@@ -38,6 +38,47 @@ const Home: React.FC = () => {
           </p>          
         </article>
       </div>
+      <div className="team-section" id="Team">
+        <h2 className="team-title">Tim Kami</h2>
+        <div className="team-cards">
+        <div className="team-card">
+            <img src="/images/Joe.jpg" alt="Joenery Pratama" />
+            <h3>Joenery Pratama</h3>
+            <p>4332201008</p>
+            <p>Mahasiswa Rekayasa Keamanan Siber</p>
+          </div>
+          <div className="team-card">
+            <img src="/images/Yogi.jpg" alt="Yogi Rahman Alif" />
+            <h3>Yogi Rahman Alif</h3>
+            <p>4332201012</p>
+            <p>Mahasiswa Rekayasa Keamanan Siber</p>
+          </div>
+          <div className="team-card">
+            <img src="/images/Fathur.png" alt="Fathur Wiriansyah" />
+            <h3>Fathur Wiriansyah</h3>
+            <p>4332201023</p>
+            <p>Mahasiswa Rekayasa Keamanan Siber</p>
+          </div>
+          <div className="team-card">
+            <img src="/images/Hafiz.png" alt="M. Hafiz Pratama" />
+            <h3>M. Hafiz Pratama</h3>
+            <p>4332201026</p>
+            <p>Mahasiswa Rekayasa Keamanan Siber</p>
+          </div>
+          <div className="team-card">
+            <img src="/images/Putri.png" alt="Putri Syajah" />
+            <h3>Putri Syajah</h3>
+            <p>4332201066</p>
+            <p>Mahasiswa Rekayasa Keamanan Siber</p>
+          </div>
+          <div className="team-card">
+            <img src="/images/Sultan.jpg" alt="RM. Sultan Arif" />
+            <h3>RM. Sultan Arif</h3>
+            <p>4332201024</p>
+            <p>Mahasiswa Rekayasa Keamanan Siber</p>
+          </div>
+        </div>
+      </div>
     </main>
   );
 };
