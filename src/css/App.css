@@ -35,7 +35,7 @@ header.navbar-container {
 }
  
 header.navbar-container .logo img {
-  width: 50px;
+  width: 110px;
 }
  
 header.navbar-container .nav-list ul {
@@ -112,7 +112,7 @@ header.navbar-container .nav-list li:hover a {
 }
 
 .landing .landing-image img {
-  width: 300px;
+  width: 450px;
   min-width: 250px;
   margin: auto;
 }
@@ -235,4 +235,76 @@ header.navbar-container .nav-list li:hover a {
   }
 }
 
+/* ScanStatus Container */
+.scan-status {
+  padding: 2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Input URL */
+.scan-status input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.scan-status input:focus {
+  border-color: #2563eb; /* Warna biru saat fokus */
+}
+
+/* Button untuk Scan */
+.scan-status button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #2563eb;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.scan-status button:hover {
+  background-color: #1d4ed8; /* Warna lebih gelap saat hover */
+}
+
+.scan-status button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Status Indicator */
+.scan-status .status {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.scan-status .status.text-green-500 {
+  color: #22c55e; /* Hijau untuk status completed */
+}
+
+.scan-status .status.text-red-500 {
+  color: #ef4444; /* Merah untuk status failed */
+}
+
+.scan-status .status.text-yellow-500 {
+  color: #eab308; /* Kuning untuk status pending atau running */
+}
+
+.scan-status .status.text-gray-500 {
+  color: #6b7280; /* Abu-abu jika status tidak ada */
+}
 

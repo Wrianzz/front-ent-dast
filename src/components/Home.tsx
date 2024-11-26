@@ -5,7 +5,7 @@ const Home: React.FC = () => {
     <main>
       <div className="landing" id="Home">
         <div className="landing-image">
-          <img src="/logo512.png" alt="Cyber Ranger" />
+          <img src="/images/logo.png" alt="Cyber Ranger" />
         </div>
         <div className="landing-description">
           <h1 className="title">Codename : APEX</h1>
