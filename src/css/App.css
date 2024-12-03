@@ -55,10 +55,12 @@ header.navbar-container .nav-list li a {
   font-size: 1.05rem;
   font-weight: 350;
   color: white;
+  transition: 0.3s ease;
 }
 
 header.navbar-container .nav-list li:hover a {
     font-weight: bold;
+    width: 100%;
 }
 
 .landing {
@@ -73,42 +75,46 @@ header.navbar-container .nav-list li:hover a {
 
 .landing .landing-description {
   flex: 1 1;
+  animation: fadein 0.5s ease-in forwards;
 }
 
 .landing .landing-description .title {
   margin-block: 1rem;
   font-size: 3.5rem;
+  animation: fadein 0.5s ease-in forwards;
 }
 
 .landing .landing-description p {
   font-size: 1.2rem;
   line-height: 1.7rem;
+  animation: fadein 0.5s ease-in forwards;
 }
 
 .landing .landing-description button {
   padding: 0.8rem 2.5rem;
   border: 3px solid transparent;
-  border-radius: 15px;
+  border-radius: 5px;
   margin-block-start: 1rem;
   background-color: #131620;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Red Hat Display', sans-serif;
   text-transform: uppercase;
   font-size: 1rem;
   font-weight: 700;
   color: white;
   cursor: pointer;
-  transition: all 0.15s ease-in;
+  transition: all 0.5s ease-in;
 }
 
 .landing .landing-description button:hover {
-  border: 3px solid #2d3e50;
+  border: 3px solid #131620;
   background-color: transparent;
-  color: #2d3e50;
+  color: #132620;
 }
 
 .landing .landing-image {
   flex: 1;
   display: flex;
+  animation: fadein 0.5s ease-in forwards;
 }
 
 .landing .landing-image img {
@@ -124,6 +130,7 @@ header.navbar-container .nav-list li:hover a {
   display: flex;
   
   gap: 8px;
+  animation: fadein 0.5s ease-in forwards;
 }
 
 .card {
@@ -182,6 +189,7 @@ header.navbar-container .nav-list li:hover a {
   padding: 3rem 2rem;
   text-align: center;
   background-color: #f9f9f9;
+  animation: fadein 0.5s ease-in forwards;
 }
 
 .team-title {
@@ -236,14 +244,16 @@ header.navbar-container .nav-list li:hover a {
 }
 
 /* ScanStatus Container */
+/* Hafiz: aku nambahkan sebuah transisi fade in menggunakan framekey*/
 .scan-status {
-  padding: 2rem;
-  max-width: 600px;
-  margin: 2rem auto;
-  background-color: white;
+  padding: 2rem 2rem;
+  margin: 2rem;
+  background-color: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 4px 8px #0000001a;
   text-align: center;
+  opacity: 0;
+  animation: fadein 0.5s ease-in forwards;
 }
 
 /* Input URL */
@@ -264,21 +274,24 @@ header.navbar-container .nav-list li:hover a {
 
 /* Button untuk Scan */
 .scan-status button {
-  width: 100%;
-  padding: 0.8rem;
-  background-color: #2563eb;
-  color: white;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
+  padding: 0.8rem 2.5rem;
+  border: 3px solid transparent;
   border-radius: 5px;
+  margin-block-start: 1rem;
+  background-color: #131620;
+  font-family: 'Red Hat Display', sans-serif;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
+  transition: all 0.5s ease-in;
 }
 
 .scan-status button:hover {
-  background-color: #1d4ed8; /* Warna lebih gelap saat hover */
-}
+  border: 3px solid #131620;
+  background-color: transparent;
+  color: #131620;}
 
 .scan-status button:disabled {
   background-color: #9ca3af;
@@ -301,10 +314,218 @@ header.navbar-container .nav-list li:hover a {
 }
 
 .scan-status .status.text-yellow-500 {
-  color: #eab308; /* Kuning untuk status pending atau running */
+  color: #eab308; /* Kuning untuk status pending */
+}
+
+.scan-status .status.text-blue-500 {
+  color: #081fea; /* Kuning untuk status running */
 }
 
 .scan-status .status.text-gray-500 {
   color: #6b7280; /* Abu-abu jika status tidak ada */
 }
 
+/*Scan Lists*/
+.table-container {
+  padding: 15px;
+  width: 100%; /* Sesuaikan tabel dengan lebar layar */
+  display: flex;
+  justify-content: center; /* Untuk memusatkan konten */
+  animation: fadein 0.5s ease-in forwards;
+}
+
+.table-card {
+  box-shadow: 2px 4px 8px 0 #02020263;
+  border-radius: 5px;
+  padding: 2rem; /* Kurangi padding agar lebih proporsional */
+  width: 100%; /* Pastikan card mengisi kontainer */
+  margin: 0 auto; /* Memusatkan secara horizontal */
+  overflow-x: auto; /* Menambahkan scroll horizontal jika konten terlalu besar */
+}
+
+.table-card table {
+  width: 100%; /* Tabel mengisi card secara penuh */
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.table-card h1 {  
+  text-align: center; 
+  font-size: 1.8rem; 
+  font-weight: bold; 
+  margin-bottom: 2rem; 
+}
+
+.table-card th,
+.table-card td {
+  text-align: left;
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.table-card th {
+  background-color: #f4f4f9;
+  font-weight: bold;
+  color: #333;
+}
+
+.table-card tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table-card tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.table-card tr:hover {
+  background-color: #eaf6ff;
+}
+
+.table-card button {
+  margin: 2px;
+  padding: 8px 16px;
+  border: 3px solid transparent;
+  border-radius: 5px;
+  background-color: #d40000;
+  font-family: 'Red Hat Display', sans-serif;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.table-card button:hover {
+  border: 3px solid #d40000;
+  background-color: transparent;
+  color: #d40000;
+}
+
+.table-card button:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ff4d4d;
+}
+
+@media (max-width: 768px) {
+  .table-card {
+    padding: 1rem; /* Kurangi padding untuk layar kecil */
+  }
+
+  .table-card table {
+    font-size: 0.9rem; /* Kurangi ukuran font untuk layar kecil */
+  }
+}
+
+/*Scan-Details*/
+.scan-details {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  animation: fadein 1s ease-in forwards;
+}
+
+.test-details {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.test-details p {
+  margin: 5px 0;
+}
+
+.test-details pre {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.test-details pre.scrollable {
+  max-height: 150px; /* Sesuaikan tinggi maksimal */
+  overflow-y: auto; /* Tambahkan scrollbar vertikal */
+}
+
+.back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+.error-container, .no-details-container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.error-message {
+  color: red;
+}
+
+/* Mengubah tampilan scrollable area */
+.test-details pre.scrollable {
+  max-height: 150px;
+  overflow-y: scroll;
+  padding: 10px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Mengubah tampilan scrollbar */
+.test-details pre.scrollable::-webkit-scrollbar {
+  width: 8px; /* Lebar scrollbar */
+  height: 8px; /* Lebar scrollbar horizontal */
+}
+
+/* Track scrollbar */
+.test-details pre.scrollable::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Warna latar belakang track */
+  border-radius: 4px;
+}
+
+/* Handle scrollbar */
+.test-details pre.scrollable::-webkit-scrollbar-thumb {
+  background-color: #007bff; /* Warna handle scrollbar */
+  border-radius: 4px;
+  border: 2px solid #f1f1f1; /* Memberikan efek border pada handle */
+  transition: background-color 0.3s ease;
+}
+
+/* Hover efek pada handle */
+.test-details pre.scrollable::-webkit-scrollbar-thumb:hover {
+  background-color: #0056b3; /* Warna handle saat di-hover */
+}
+
+/* Scrollbar corner (jika ada) */
+.test-details pre.scrollable::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+/* Custom scrollbar pada scrollbar horizontal */
+.test-details pre.scrollable::-webkit-scrollbar-horizontal {
+  height: 8px;
+}
+
+/*Keyframes animation*/
+@keyframes fadein{
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { startScan, getScanStatus } from "./apiService"; // Import fungsi API
+import { startScan, getScanStatus } from "../api/apiService"; // Import fungsi API
 
 const Tools: React.FC = () => {
   const [name, setName] = useState("");
@@ -57,8 +57,9 @@ const Tools: React.FC = () => {
       case "FAILED":
         return "text-red-500";
       case "PENDING":
+        return "text-yellow-500"
       case "RUNNING":
-        return "text-yellow-500";
+        return "text-blue-500";
       default:
         return "text-gray-500";
     }

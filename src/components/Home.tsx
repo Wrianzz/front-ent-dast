@@ -48,7 +48,7 @@ const Home: React.FC = () => {
             <p>Mahasiswa Rekayasa Keamanan Siber</p>
           </div>
           <div className="team-card">
-            <img src="/images/Yogi.jpg" alt="Yogi Rahman Alif" />
+            <img src="/images/Yogi.png" alt="Yogi Rahman Alif" />
             <h3>Yogi Rahman Alif</h3>
             <p>4332201012</p>
             <p>Mahasiswa Rekayasa Keamanan Siber</p>

@@ -15,6 +15,9 @@ const Navbar: React.FC = () => {
           <li>
             <Link to="/tools">Tools</Link>
           </li>
+          <li>
+            <Link to="/list">Scan Lists</Link>
+          </li>
         </ul>
       </nav>
     </header>
