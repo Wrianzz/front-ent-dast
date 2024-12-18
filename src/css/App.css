@@ -598,3 +598,96 @@ header.navbar-container .nav-list li:hover a {
   color: #6b7280; /* Abu-abu jika status tidak ada */
 }
 
+.login {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  min-height: 90vh;
+  
+}
+
+.login-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-image .logo {
+  max-width: 100%;
+  height: auto;
+}
+
+.login-card {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 40px;
+  height: 500px;
+}
+
+.card-body {
+  width: 100%;
+  max-width: 350px;
+}
+
+.login-card-description {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+}
+
+.form-control:focus {
+  border-color: #000;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #000;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #444;
+}
+
+.login-card-footer-text {
+  text-align: center;
+  margin-top: 15px;
+  color: #555;
+}
+
+.login-card-footer-text a {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-card-footer-text a:hover {
+  text-decoration: underline;
+}

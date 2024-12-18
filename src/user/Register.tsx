@@ -3,13 +3,14 @@ import { Link } from 'react-router-dom';
 
 const RegisterPage : React.FC = () => {
   return (
-    <div className="login-wrapper">
-      <div className="brand-wrapper">
-        <img src="logo.png" alt="logo" className="logo" />
-      </div>
-      <div className="login-card">
-        <div className="card-body">
-          <h2 className="login-card-description">Welcome!</h2>
+    <div className="login">
+    <div className="login-image">
+      <img src="/images/Logo.png" alt="logo" className="logo" />
+    </div>
+    
+    <div className="login-card">
+      <div className="card-body">
+        <h2 className="login-card-description">Register</h2>
           <form>
             <div className="form-group">
               <input
@@ -36,7 +37,7 @@ const RegisterPage : React.FC = () => {
               />
             </div>
             <button type="submit" className="btn login-btn">
-              Sign Up
+              Register
             </button>
           </form>
           <p className="login-card-footer-text">
