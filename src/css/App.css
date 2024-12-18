@@ -598,6 +598,8 @@ header.navbar-container .nav-list li:hover a {
   color: #6b7280; /* Abu-abu jika status tidak ada */
 }
 
+/* Login Section */
+
 .login {
   flex: 1;
   width: 100%;
@@ -606,7 +608,6 @@ header.navbar-container .nav-list li:hover a {
   display: flex;
   align-items: center;
   min-height: 90vh;
-  
 }
 
 .login-image {
@@ -634,6 +635,7 @@ header.navbar-container .nav-list li:hover a {
 .card-body {
   width: 100%;
   max-width: 350px;
+  border: 5px solid #f3f3f3;
 }
 
 .login-card-description {
