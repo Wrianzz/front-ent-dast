@@ -387,7 +387,7 @@ header.navbar-container .nav-list li:hover a {
   padding: 8px 16px;
   border: 3px solid transparent;
   border-radius: 5px;
-  background-color: #d40000;
+  /*background-color: #d40000;*/
   font-family: 'Red Hat Display', sans-serif;
   text-transform: uppercase;
   font-size: 1rem;
@@ -397,13 +397,34 @@ header.navbar-container .nav-list li:hover a {
   transition: all 0.2s ease-in;
 }
 
-.table-card button:hover {
-  border: 3px solid #d40000;
+.table-card .view-button:hover {
+  border: 2px solid #007bff;
   background-color: transparent;
-  color: #d40000;
+  color: #007bff;
 }
 
-.table-card button:focus {
+.table-card .view-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px #007bff;
+}
+
+.table-card .view-button{
+  background-color: #007bff;
+  border: 2px solid #007bff;
+}
+
+.table-card .delete-button{
+  background-color: #ff4d4d;
+  border: 2px solid #ff4d4d;
+}
+
+.table-card .delete-button:hover {
+  border: 2px solid #ff4d4d;
+  background-color: transparent;
+  color: #ff4d4d;
+}
+
+.table-card .delete-button:focus {
   outline: none;
   box-shadow: 0 0 5px #ff4d4d;
 }
@@ -520,6 +541,24 @@ header.navbar-container .nav-list li:hover a {
   height: 8px;
 }
 
+/* loading */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Memenuhi seluruh tinggi layar */
+  background-color: #f9f9f9;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3; /* Warna luar spinner */
+  border-top: 5px solid #007bff; /* Warna utama spinner */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
 /*Keyframes animation*/
 @keyframes fadein{
   from{
@@ -529,3 +568,33 @@ header.navbar-container .nav-list li:hover a {
     opacity: 1;
   }
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.text-green-500 {
+  color: #22c55e; /* Hijau untuk status completed */
+}
+
+.text-red-500 {
+  color: #ef4444; /* Merah untuk status failed */
+}
+
+.text-yellow-500 {
+  color: #eab308; /* Kuning untuk status pending */
+}
+
+.text-blue-500 {
+  color: #081fea; /* Kuning untuk status running */
+}
+
+.text-gray-500 {
+  color: #6b7280; /* Abu-abu jika status tidak ada */
+}
+

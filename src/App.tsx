@@ -4,7 +4,9 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Tools from './components/Tools';
 import Lists from './components/ScanLists';
-import ScanDetails from './components/ScanDetails'; 
+import ScanDetails from './components/ScanDetails';
+import LoginPage from './user/Login'; 
+import RegisterPage from './user/Register';
 import './css/App.css';
 
 const App: React.FC = () => {
@@ -19,6 +21,8 @@ const App: React.FC = () => {
       {/* Rute untuk halaman Scan Lists */}
       <Route path="/list" element={<Lists />} />
       <Route path="/scan/:id" element={<ScanDetails />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path='/register' element={<RegisterPage />} />
     </Routes>
   </Router>
   );

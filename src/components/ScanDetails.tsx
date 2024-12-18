@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getScanWithTests, getTestDetails } from "../api/apiService";
+import Loading from "./Loading";
 
 interface ScanDetailsType {
   name: string;
@@ -56,9 +57,23 @@ const ScanDetails: React.FC = () => {
     fetchScanDetails();
   }, [fetchScanDetails]);  // Menggunakan fetchScanDetails di sini sebagai dependensi
   
+  const getStatusColor = () => {
+    switch (details?.status) {
+      case "COMPLETED":
+        return "text-green-500";
+      case "FAILED":
+        return "text-red-500";
+      case "PENDING":
+        return "text-yellow-500";
+      case "RUNNING":
+        return "text-blue-500";
+      default:
+        return "text-gray-500";
+    }
+  };
 
   if (loading) {
-    return <p>Loading scan details...</p>;
+    return <Loading />;
   }
 
   if (error) {
@@ -83,6 +98,25 @@ const ScanDetails: React.FC = () => {
     );
   }
 
+  if (details.status === "FAILED") {
+    return (
+      <div className="scan-details">
+      <h1>Scan Details</h1>
+      <p>
+        <strong>Name:</strong> {details.name}
+      </p>
+      <p>
+        <strong>Status:</strong> <span className={getStatusColor()}>FAILED</span>
+      </p>
+      <h3>Vulnerability Found:</h3>
+        <p>Scan Failed, No Vulnerability Found.</p>
+      <button className="back-button" onClick={() => navigate("/list")}>
+        Back to List
+      </button>
+      </div>
+    );
+  }
+
   return (
     <div className="scan-details">
       <h1>Scan Details</h1>
@@ -90,30 +124,38 @@ const ScanDetails: React.FC = () => {
         <strong>Name:</strong> {details.name}
       </p>
       <p>
-        <strong>Status:</strong> {details.status}
+        <strong>Status:</strong>{" "}
+        <span className={getStatusColor()}>{details.status}</span>
       </p>
-      <h3>Associated Tests:</h3>
+      <h3>Vulnerability Found:</h3>
       {tests.length > 0 ? (
         <div>
           {tests.map((test) => (
             <div key={test.id} className="test-details">
-              <p><strong>Vulnerability ID:</strong> {test.vuln_id}</p>
-              <p><strong>Endpoint:</strong> {test.url}</p>
-              <p><strong>Request:</strong></p>
+              <p>
+                <strong>Vulnerability ID:</strong> {test.vuln_id}
+              </p>
+              <p>
+                <strong>Endpoint:</strong> {test.url}
+              </p>
+              <p>
+                <strong>Request:</strong>
+              </p>
               <pre>{test.request}</pre>
-              <p><strong>Response:</strong></p>
+              <p>
+                <strong>Response:</strong>
+              </p>
               <pre className="scrollable">{test.response}</pre>
             </div>
           ))}
         </div>
       ) : (
-        <p>No associated test details available.</p>
+        <p>No Vulnerability Found.</p>
       )}
       <button className="back-button" onClick={() => navigate("/list")}>
         Back to List
       </button>
     </div>
   );
-
-} 
+};
 export default ScanDetails;

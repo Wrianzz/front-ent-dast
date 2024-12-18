@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllScans, deleteScanById } from "../api/apiService";
+import Loading from "./Loading";
 
 interface Scan {
   id: string;
@@ -48,7 +49,7 @@ const ScanLists: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading scans...</p>;
+    return <Loading />;
   }
 
   if (error) {
