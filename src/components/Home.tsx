@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
   return (
@@ -14,8 +15,12 @@ const Home: React.FC = () => {
           mahasiswa Politeknik Negeri Batam. Aplikasi ini dirancang untuk membantu proses pengujian keamanan dan penetrasi aplikasi secara efisien, 
           dengan fitur yang mendukung kebutuhan keamanan siber modern.
           </p>
-          <button>Lebih lanjut</button>
-        </div>
+          {!sessionStorage.getItem("authToken") && (
+            <Link to="/login">
+              <button>Login</button>
+            </Link>
+          )}
+          </div>
       </div>
       <div className="content">
         <article className="card" id="Tentang">

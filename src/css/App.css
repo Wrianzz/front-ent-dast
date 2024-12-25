@@ -485,6 +485,21 @@ header.navbar-container .nav-list li:hover a {
   background-color: #0056b3;
 }
 
+.create-report-button {
+  margin-top: 20px;
+  margin-left: 20px;
+  padding: 10px 20px;
+  background-color: #08ac03;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.create-report-button:hover {
+  background-color: #08ac03;
+}
+
 .error-container, .no-details-container {
   text-align: center;
   margin-top: 50px;
@@ -605,12 +620,15 @@ header.navbar-container .nav-list li:hover a {
   width: 100%;
   max-width: 1200px;
   margin-inline: auto;
+  margin-top: 10px;
   display: flex;
   align-items: center;
-  min-height: 90vh;
+  justify-content: center;
+  min-height: calc(90vh - 80px);
+  animation: fadein 0.5s ease-in forwards;
 }
 
-.login-image {
+/*.login-image {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -621,21 +639,24 @@ header.navbar-container .nav-list li:hover a {
   max-width: 100%;
   height: auto;
 }
-
+*/
 .login-card {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 40px;
-  height: 500px;
+  max-height: 500px;
+  border: 1px solid #ddd;
+  background-color: #fff; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-body {
   width: 100%;
   max-width: 350px;
-  border: 5px solid #f3f3f3;
+  margin: auto;
 }
 
 .login-card-description {

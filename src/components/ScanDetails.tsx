@@ -155,6 +155,9 @@ const ScanDetails: React.FC = () => {
       <button className="back-button" onClick={() => navigate("/list")}>
         Back to List
       </button>
+      <button className="create-report-button">
+        Create Report
+      </button>
     </div>
   );
 };

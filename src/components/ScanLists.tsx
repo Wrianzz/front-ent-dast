@@ -21,14 +21,14 @@ const ScanLists: React.FC = () => {
     try {
       const data = await getAllScans();
       setScans(data);
-    } catch (err) {
-      setError("Failed to fetch scans. Please try again later.");
+    } catch (err: any) {
       console.error("Error fetching scans:", err);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
   };
-
+  
   // Fungsi untuk menghapus scan berdasarkan ID
   const handleDelete = async (id: string) => {
     setDeletingId(id); // Tampilkan loader di tombol yang dipilih
