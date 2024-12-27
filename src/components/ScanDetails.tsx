@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getScanWithTests, getTestDetails } from "../api/apiService";
+import { getScanWithTests, getTestDetails, getVulnDetails } from "../api/apiService";
 import Loading from "./Loading";
+import PDFGenerator from "./PDFGenerator";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 interface ScanDetailsType {
   name: string;
@@ -16,35 +18,44 @@ interface TestDetails {
   scan_id: string;
   url: string;
   vuln_id: number;
+  vulnerabilityDetails: {
+    cvss_vector: string;
+    description: string;
+    severity: string;
+    id: number;
+  }; // Detail tambahan untuk menyimpan informasi vuln
 }
 
 const ScanDetails: React.FC = () => {
-  const { id } = useParams(); // Ambil scan ID dari URL
-  const navigate = useNavigate(); // Untuk navigasi kembali
+  const { id } = useParams(); 
+  const navigate = useNavigate();
   const [details, setDetails] = useState<ScanDetailsType | null>(null);
-  const [tests, setTests] = useState<TestDetails[]>([]); // Menyimpan detail tes
+  const [tests, setTests] = useState<TestDetails[]>([]); 
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); // Menyimpan error
+  const [error, setError] = useState<string | null>(null); 
 
-  // Fungsi untuk memuat detail scan
   const fetchScanDetails = useCallback(async () => {
     try {
       if (!id) return;
-      const data = await getScanWithTests(id); // Panggil API untuk detail scan
+      const data = await getScanWithTests(id); 
       setDetails(data);
-  
-      // Ambil detail untuk setiap testId
+
       const testDetails = await Promise.all(
         data.tests.map(async (testId: string) => {
           try {
-            return await getTestDetails(testId);
+            const testData = await getTestDetails(testId);
+            if (testData.vuln_id) {
+              const vulnerability = await getVulnDetails(testData.vuln_id.toString());
+              return { ...testData, vulnerabilityDetails: vulnerability };
+            }
+            return testData;
           } catch (error) {
             console.error(`Error fetching details for test ID ${testId}:`, error);
-            return null; // Abaikan error untuk test tertentu
+            return null; 
           }
         })
       );
-      setTests(testDetails.filter(Boolean) as TestDetails[]); // Hapus nilai null
+      setTests(testDetails.filter(Boolean) as TestDetails[]); 
     } catch (err) {
       setError("Failed to fetch scan details. Please try again later.");
       console.error("Error fetching scan details:", err);
@@ -55,7 +66,7 @@ const ScanDetails: React.FC = () => {
   
   useEffect(() => {
     fetchScanDetails();
-  }, [fetchScanDetails]);  // Menggunakan fetchScanDetails di sini sebagai dependensi
+  }, [fetchScanDetails]); 
   
   const getStatusColor = () => {
     switch (details?.status) {
@@ -101,18 +112,18 @@ const ScanDetails: React.FC = () => {
   if (details.status === "FAILED") {
     return (
       <div className="scan-details">
-      <h1>Scan Details</h1>
-      <p>
-        <strong>Name:</strong> {details.name}
-      </p>
-      <p>
-        <strong>Status:</strong> <span className={getStatusColor()}>FAILED</span>
-      </p>
-      <h3>Vulnerability Found:</h3>
+        <h1>Scan Details</h1>
+        <p>
+          <strong>Name:</strong> {details.name}
+        </p>
+        <p>
+          <strong>Status:</strong> <span className={getStatusColor()}>FAILED</span>
+        </p>
+        <h3>Vulnerability Found:</h3>
         <p>Scan Failed, No Vulnerability Found.</p>
-      <button className="back-button" onClick={() => navigate("/list")}>
-        Back to List
-      </button>
+        <button className="back-button" onClick={() => navigate("/list")}>
+          Back to List
+        </button>
       </div>
     );
   }
@@ -132,9 +143,23 @@ const ScanDetails: React.FC = () => {
         <div>
           {tests.map((test) => (
             <div key={test.id} className="test-details">
-              <p>
-                <strong>Vulnerability ID:</strong> {test.vuln_id}
-              </p>
+              {test.vulnerabilityDetails ? (
+                <>
+                  <p>
+                    <strong>Vulnerability Description:</strong> {test.vulnerabilityDetails.description}
+                  </p>
+                  <p>
+                    <strong>Severity:</strong> {test.vulnerabilityDetails.severity}
+                  </p>
+                  <p>
+                    <strong>CVSS Vector:</strong> {test.vulnerabilityDetails.cvss_vector}
+                  </p>
+                </>
+              ) : (
+                <p>
+                  <strong>Vulnerability:</strong> Not Found
+                </p>
+              )}
               <p>
                 <strong>Endpoint:</strong> {test.url}
               </p>
@@ -155,10 +180,15 @@ const ScanDetails: React.FC = () => {
       <button className="back-button" onClick={() => navigate("/list")}>
         Back to List
       </button>
-      <button className="create-report-button">
-        Create Report
-      </button>
+      <PDFDownloadLink
+        document={<PDFGenerator name={details.name} status={details.status} tests={tests} />}
+        fileName={details.name}>
+        <button className="create-report-button">
+          Create Report
+        </button>
+      </PDFDownloadLink>
     </div>
   );
 };
+
 export default ScanDetails;

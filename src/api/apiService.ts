@@ -174,3 +174,18 @@ export const getTestDetails = async (testId: string) => {
     throw new Error(error.response?.data?.error || error.message);
   }
 };
+
+// Mendapatkan detail Vuln Berdasarkan ID
+export const getVulnDetails = async (vulnId: string) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/vuln/${vulnId}`, {
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeader(),
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.error || error.message);
+  }
+};
