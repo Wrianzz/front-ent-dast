@@ -4,14 +4,8 @@ import {
   Page,
   Text,
   View,
-  StyleSheet
+  StyleSheet,
 } from "@react-pdf/renderer";
-
-// Contoh jika ingin menggunakan font kustom (opsional)
-// Font.register({
-//   family: "Roboto",
-//   src: "https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu72xKOzY.woff2",
-// });
 
 interface TestDetails {
   id: string;
@@ -37,8 +31,10 @@ interface ScanDetailsProps {
 const PDFGenerator: React.FC<ScanDetailsProps> = ({ name, status, tests }) => {
   const styles = StyleSheet.create({
     page: {
-      padding: 40,
-      fontFamily: "Helvetica", // Bisa diganti ke font custom
+      padding: "40px 40px 90px 40px", // Increased bottom padding
+      fontFamily: "Helvetica",
+      position: "relative",
+      backgroundColor: "white",
     },
     header: {
       borderBottom: "2px solid #007bff",
@@ -58,12 +54,6 @@ const PDFGenerator: React.FC<ScanDetailsProps> = ({ name, status, tests }) => {
     section: {
       marginBottom: 20,
     },
-    tableHeader: {
-      backgroundColor: "#007bff",
-      color: "white",
-      padding: 10,
-      borderRadius: 4,
-    },
     tableRow: {
       display: "flex",
       flexDirection: "row",
@@ -76,121 +66,166 @@ const PDFGenerator: React.FC<ScanDetailsProps> = ({ name, status, tests }) => {
       flex: 1,
       fontSize: 10,
       fontWeight: "bold",
+      marginBottom: 5,
     },
     rowContent: {
       flex: 2,
       fontSize: 10,
-      wordWrap: "break-word",
     },
     testDetailsContainer: {
-      marginBottom: 20,
+      marginBottom: 30,
+      breakInside: "avoid",
     },
     testTitle: {
       fontSize: 16,
       fontWeight: "bold",
       color: "#007bff",
       marginBottom: 10,
+      paddingTop: 10,
+    },
+    codeBlockWrapper: {
+      marginTop: 10,
+      marginBottom: 10,
+    },
+    codeBlockLabel: {
+      fontSize: 10,
+      fontWeight: "bold",
+      marginBottom: 5,
     },
     codeBlock: {
       backgroundColor: "#f9f9f9",
       padding: 10,
-      borderRadius: 4,
-      fontSize: 10,
+      fontSize: 8, // Reduced font size
       fontFamily: "Courier",
-      whiteSpace: "pre-wrap",
-      wordWrap: "break-word",
-      marginTop: 10, 
-      marginBottom:5,
+      //minHeight: 40,
+      width: "100%",
     },
-    footer: {
+    codeText: {
+      fontSize: 8,
+      lineHeight: 1.4,
+    },
+    footerContainer: {
       position: "absolute",
-      bottom: 20,
-      left: 40,
-      right: 40,
+      bottom: 40,
+      left: 0,
+      right: 0,
+      borderTop: "1px solid #ccc",
+      backgroundColor: "white",
+      paddingHorizontal: 40,
+      paddingVertical: 10,
+    },
+    footerText: {
       fontSize: 10,
-      textAlign: "center",
       color: "#555",
+      textAlign: "center",
     },
-    rowLabelReq: {
-      flex: 1,
-      fontSize: 10,
-      fontWeight: "bold",
-      marginTop: 12,
-    },
-    rowLabelRes: {
-      flex: 1,
-      fontSize: 10,
-      fontWeight: "bold",
-      marginTop:12,
+    mainContent: {
+      flexGrow: 1,
     }
   });
 
+  const splitCodeText = (text: string) => {
+    const maxCharsPerLine = 100;
+    const lines: string[] = []; // Menambahkan tipe eksplisit string[]
+    let currentLine = '';
+  
+    text.split('\n').forEach(line => {
+      if (line.length <= maxCharsPerLine) {
+        lines.push(line);
+      } else {
+        while (line.length > 0) {
+          currentLine = line.slice(0, maxCharsPerLine);
+          lines.push(currentLine);
+          line = line.slice(maxCharsPerLine);
+        }
+      }
+    });
+  
+    return lines.join('\n');
+  };
+  
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.title}>Scan Report</Text>
-          <Text style={styles.subtitle}>Generated on {new Date().toLocaleDateString()}</Text>
-        </View>
-
-        {/* General Details */}
-        <View style={styles.section}>
-          <Text style={styles.testTitle}>General Details</Text>
-          <View style={styles.tableRow}>
-            <Text style={styles.rowLabel}>Name:</Text>
-            <Text style={styles.rowContent}>{name}</Text>
+        <View style={styles.mainContent}>
+          <View style={styles.header}>
+            <Text style={styles.title}>Scan Report</Text>
+            <Text style={styles.subtitle}>
+              Generated on {new Date().toLocaleDateString()}
+            </Text>
           </View>
-          <View style={styles.tableRow}>
-            <Text style={styles.rowLabel}>Status:</Text>
-            <Text style={styles.rowContent}>{status}</Text>
-          </View>
-        </View>
 
-        {/* Vulnerability Details */}
-        <View style={styles.section}>
-          <Text style={styles.testTitle}>Vulnerability Details</Text>
-          {tests.length > 0 ? (
-            tests.map((test, index) => (
-              <View key={test.id} style={styles.testDetailsContainer}>
-                <Text style={styles.testTitle}>Test {index + 1}</Text>
-                <View style={styles.tableRow}>
-                  <Text style={styles.rowLabel}>Description:</Text>
-                  <Text style={styles.rowContent}>
-                    {test.vulnerabilityDetails.description}
-                  </Text>
+          <View style={styles.section}>
+            <Text style={styles.testTitle}>General Details</Text>
+            <View style={styles.tableRow}>
+              <Text style={styles.rowLabel}>Name:</Text>
+              <Text style={styles.rowContent}>{name}</Text>
+            </View>
+            <View style={styles.tableRow}>
+              <Text style={styles.rowLabel}>Status:</Text>
+              <Text style={styles.rowContent}>{status}</Text>
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.testTitle}>Vulnerability Details</Text>
+            {tests.map((test, index) => (
+              <View key={test.id} wrap={true}>
+                <View style={styles.testDetailsContainer}>
+                  <Text style={styles.testTitle}>Test {index + 1}</Text>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.rowLabel}>Description:</Text>
+                    <Text style={styles.rowContent}>
+                      {test.vulnerabilityDetails.description}
+                    </Text>
+                  </View>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.rowLabel}>Severity:</Text>
+                    <Text style={styles.rowContent}>
+                      {test.vulnerabilityDetails.severity}
+                    </Text>
+                  </View>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.rowLabel}>CVSS Vector:</Text>
+                    <Text style={styles.rowContent}>
+                      {test.vulnerabilityDetails.cvss_vector}
+                    </Text>
+                  </View>
+                  <View style={styles.tableRow}>
+                    <Text style={styles.rowLabel}>Endpoint:</Text>
+                    <Text style={styles.rowContent}>{test.url}</Text>
+                  </View>
                 </View>
-                <View style={styles.tableRow}>
-                  <Text style={styles.rowLabel}>Severity:</Text>
-                  <Text style={styles.rowContent}>
-                    {test.vulnerabilityDetails.severity}
-                  </Text>
+
+                {/* Request Block */}
+                <View style={styles.codeBlockWrapper} wrap={true}>
+                  <Text style={styles.codeBlockLabel}>Request</Text>
+                  <View style={styles.codeBlock}>
+                    <Text style={styles.codeText}>
+                      {splitCodeText(test.request)}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.tableRow}>
-                  <Text style={styles.rowLabel}>CVSS Vector:</Text>
-                  <Text style={styles.rowContent}>
-                    {test.vulnerabilityDetails.cvss_vector}
-                  </Text>
+
+                {/* Response Block */}
+                <View style={styles.codeBlockWrapper} wrap={true}>
+                  <Text style={styles.codeBlockLabel}>Response</Text>
+                  <View style={styles.codeBlock}>
+                    <Text style={styles.codeText}>
+                      {splitCodeText(test.response)}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.tableRow}>
-                  <Text style={styles.rowLabel}>Endpoint:</Text>
-                  <Text style={styles.rowContent}>{test.url}</Text>
-                </View>
-                <Text style={styles.rowLabel}>Request</Text>
-                <Text style={styles.codeBlock}>{test.request}</Text>
-                <Text style={styles.rowLabel}>Response</Text>
-                <Text style={styles.codeBlock}>{test.response}</Text>
               </View>
-            ))
-          ) : (
-            <Text>No vulnerabilities found</Text>
-          )}
+            ))}
+          </View>
         </View>
 
-        {/* Footer */}
-        <View style={styles.footer}>
-          <Text>Page 1</Text> {/* Ubah sesuai dengan nomor halaman */}
-          <Text>Generated by Team Menkrep</Text>
+        <View style={styles.footerContainer} fixed>
+          <Text style={styles.footerText} render={({ pageNumber, totalPages }) => (
+            `Page ${pageNumber} of ${totalPages}`
+          )} />
+          <Text style={styles.footerText}>Generated by Team Menkrep</Text>
         </View>
       </Page>
     </Document>
