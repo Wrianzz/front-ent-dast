@@ -23,21 +23,22 @@ interface TestDetails {
     description: string;
     severity: string;
     id: number;
-  }; // Detail tambahan untuk menyimpan informasi vuln
+  };
 }
 
 const ScanDetails: React.FC = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
   const [details, setDetails] = useState<ScanDetailsType | null>(null);
-  const [tests, setTests] = useState<TestDetails[]>([]); 
+  const [tests, setTests] = useState<TestDetails[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null); 
+  const [error, setError] = useState<string | null>(null);
+  const [errorCode, setErrorCode] = useState<number | null>(null);
 
   const fetchScanDetails = useCallback(async () => {
     try {
       if (!id) return;
-      const data = await getScanWithTests(id); 
+      const data = await getScanWithTests(id);
       setDetails(data);
 
       const testDetails = await Promise.all(
@@ -51,23 +52,40 @@ const ScanDetails: React.FC = () => {
             return testData;
           } catch (error) {
             console.error(`Error fetching details for test ID ${testId}:`, error);
-            return null; 
+            return null;
           }
         })
       );
-      setTests(testDetails.filter(Boolean) as TestDetails[]); 
-    } catch (err) {
-      setError("Failed to fetch scan details. Please try again later.");
+      setTests(testDetails.filter(Boolean) as TestDetails[]);
+      setError(null);
+      setErrorCode(null);
+    } catch (err: any) {
       console.error("Error fetching scan details:", err);
+  
+      const statusCode = err?.response?.status || err?.status || 500;
+      switch (statusCode) {
+          case 401:
+              setError("Uh-oh! We have unauthorized user here. How about we go home? :)");
+              setErrorCode(401);
+              break;
+          case 404:
+              setError("Uh-oh! Scans not found. How about we go home?");
+              setErrorCode(404);
+              break;
+          default:
+              setError("Uh-oh! An unexpected error occurred. How about we go home?");
+              setErrorCode(statusCode);
+              break;
+        }
     } finally {
       setLoading(false);
     }
   }, [id]);
-  
+
   useEffect(() => {
     fetchScanDetails();
-  }, [fetchScanDetails]); 
-  
+  }, [fetchScanDetails]);
+
   const getStatusColor = () => {
     switch (details?.status) {
       case "COMPLETED":
@@ -89,11 +107,14 @@ const ScanDetails: React.FC = () => {
 
   if (error) {
     return (
-      <div className="error-container">
-        <p className="error-message">{error}</p>
-        <button className="back-button" onClick={() => navigate("/")}>
-          Back to List
-        </button>
+      <div id="error-pages">
+        <div className="error-page">
+          <h1>Error {errorCode}</h1>
+          <p>{error}</p>
+          <button className="error-back-button" onClick={() => navigate("/")}>
+            Back to Home
+          </button>
+        </div>
       </div>
     );
   }
@@ -109,25 +130,6 @@ const ScanDetails: React.FC = () => {
     );
   }
 
-  if (details.status === "FAILED") {
-    return (
-      <div className="scan-details">
-        <h1>Scan Details</h1>
-        <p>
-          <strong>Name:</strong> {details.name}
-        </p>
-        <p>
-          <strong>Status:</strong> <span className={getStatusColor()}>FAILED</span>
-        </p>
-        <h3>Vulnerability Found:</h3>
-        <p>Scan Failed, No Vulnerability Found.</p>
-        <button className="back-button" onClick={() => navigate("/list")}>
-          Back to List
-        </button>
-      </div>
-    );
-  }
-
   return (
     <div className="scan-details">
       <h1>Scan Details</h1>
@@ -135,8 +137,7 @@ const ScanDetails: React.FC = () => {
         <strong>Name:</strong> {details.name}
       </p>
       <p>
-        <strong>Status:</strong>{" "}
-        <span className={getStatusColor()}>{details.status}</span>
+        <strong>Status:</strong> <span className={getStatusColor()}>{details.status}</span>
       </p>
       <h3>Vulnerability Found:</h3>
       {tests.length > 0 ? (
@@ -182,10 +183,9 @@ const ScanDetails: React.FC = () => {
       </button>
       <PDFDownloadLink
         document={<PDFGenerator name={details.name} status={details.status} tests={tests} />}
-        fileName={details.name}>
-        <button className="create-report-button">
-          Create Report
-        </button>
+        fileName={details.name}
+      >
+        <button className="create-report-button">Create Report</button>
       </PDFDownloadLink>
     </div>
   );

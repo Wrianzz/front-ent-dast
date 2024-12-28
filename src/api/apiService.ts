@@ -97,7 +97,11 @@ export const startScan = async (name: string, url: string) => {
     );
     return response.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.error || error.message);
+    if (error.response) {
+      throw error.response;
+    } else {
+      throw new Error("Network Error or Server Unreachable");
+    }
   }
 };
 
@@ -112,7 +116,11 @@ export const getScanStatus = async (scanId: string) => {
     });
     return response.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.error || error.message);
+    if (error.response) {
+      throw error.response;
+    } else {
+      throw new Error("Network Error or Server Unreachable");
+    }
   }
 };
 
@@ -127,7 +135,11 @@ export const getAllScans = async () => {
     });
     return response.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.error || error.message);
+    if (error.response) {
+      throw error.response;
+    } else {
+      throw new Error("Network Error or Server Unreachable");
+    }
   }
 };
 
@@ -142,7 +154,11 @@ export const getScanWithTests = async (scanId: string) => {
     });
     return response.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.error || error.message);
+    if (error.response) {
+      throw error.response;
+    } else {
+      throw new Error("Network Error or Server Unreachable");
+    }
   }
 };
 
@@ -156,7 +172,11 @@ export const deleteScanById = async (scanId: string) => {
     });
     return response.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.error || error.message);
+    if (error.response) {
+      throw error.response;
+    } else {
+      throw new Error("Network Error or Server Unreachable");
+    }
   }
 };
 
@@ -171,7 +191,11 @@ export const getTestDetails = async (testId: string) => {
     });
     return response.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.error || error.message);
+    if (error.response) {
+      throw error.response;
+    } else {
+      throw new Error("Network Error or Server Unreachable");
+    }
   }
 };
 
@@ -186,6 +210,10 @@ export const getVulnDetails = async (vulnId: string) => {
     });
     return response.data;
   } catch (error: any) {
-    throw new Error(error.response?.data?.error || error.message);
+    if (error.response) {
+      throw error.response;
+    } else {
+      throw new Error("Network Error or Server Unreachable");
+    }
   }
 };

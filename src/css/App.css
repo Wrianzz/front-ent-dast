@@ -441,9 +441,17 @@ header.navbar-container .nav-list li:hover a {
 
 /*Scan-Details*/
 .scan-details {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  animation: fadein 1s ease-in forwards;
+  padding: 2rem 2rem;
+  margin: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 2px 4px 8px #0000001a;
+  opacity: 0;
+  animation: fadein 0.5s ease-in forwards;
+}
+
+.scan-details button {
+  align-items: center;
 }
 
 .test-details {
@@ -472,33 +480,53 @@ header.navbar-container .nav-list li:hover a {
 }
 
 .back-button {
-  margin-top: 20px;
-  padding: 10px 20px;
+  margin: 8px 10px;
+  padding: 8px 16px;
+  border: 3px solid transparent;
+  border-radius: 5px;
   background-color: #007bff;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
   color: white;
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
+  transition: all 0.2s ease-in;
 }
 
 .back-button:hover {
-  background-color: #0056b3;
-}
+  border: 3px solid #007bff;
+  background-color: transparent;
+  color: #007bff;}
 
-.create-report-button {
-  margin-top: 20px;
-  margin-left: 20px;
-  padding: 10px 20px;
-  background-color: #08ac03;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  text-align: center;
-}
+.back-button:focus {
+    outline: none;
+    box-shadow: 0 0 5px #007bff;
+  }
 
 .create-report-button:hover {
-  background-color: green;
+  border: 3px solid #08ac03;
+  background-color: transparent;
+  color: #08ac03;
+}
+
+.create-report-button:focus {
+  outline: none;
+  box-shadow: 0 0 5px #08ac03;
+}
+
+
+.create-report-button {
+  margin: 8px 20px;
+  padding: 8px 16px;
+  border: 3px solid transparent;
+  border-radius: 5px;
+  background-color: #08ac03;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
 }
 
 .error-container, .no-details-container {
@@ -715,3 +743,57 @@ header.navbar-container .nav-list li:hover a {
 .login-card-footer-text a:hover {
   text-decoration: underline;
 }
+
+#error-pages {
+  display: table;
+  width: 100%;
+  height: 90vh;
+  text-align: center;
+}
+
+.error-page {
+  display: table-cell;
+	vertical-align: middle;
+}
+
+.error-page h1 {
+  font-size: 50px;
+	display: inline-block;
+  padding-right: 10px;
+  margin: 2px;
+	animation: type .5s alternate infinite;
+}
+
+@keyframes type{
+  from{box-shadow: inset -3px 0px 0px #888;}
+  to{box-shadow: inset -3px 0px 0px transparent;}
+}
+
+.error-page p {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.error-back-button {
+  margin: 8px 10px;
+  padding: 8px 16px;
+  border: 3px solid transparent;
+  border-radius: 5px;
+  background-color: #000000;
+  font-family: 'Red Hat Display', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+}
+
+.error-back-button:hover {
+  border: 3px solid #000000;
+  background-color: transparent;
+  color: #000000;}
+
+.error-back-button:focus {
+    outline: none;
+    box-shadow: 0 0 5px #000000;
+  }

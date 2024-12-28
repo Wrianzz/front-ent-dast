@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { startScan, getScanStatus } from "../api/apiService"; // Import fungsi API
+import { useNavigate } from "react-router-dom";
+import { startScan, getScanStatus } from "../api/apiService";
 
 const Tools: React.FC = () => {
   const [name, setName] = useState("");
@@ -8,21 +9,22 @@ const Tools: React.FC = () => {
   const [status, setStatus] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
+  const isAuthenticated = !!sessionStorage.getItem("authToken");
+
   const handleStartScan = async () => {
     if (!name || !url) {
-      alert("Please provide both name and URL");
+      alert("Please provide both name and URL before starting the scan.");
       return;
     }
 
     setIsLoading(true);
     try {
-      const data = await startScan(name, url); 
-      setScanId(data.id); 
+      const data = await startScan(name, url);
+      setScanId(data.id);
       setStatus("Pending");
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "An unknown error occurred.";
-      alert(errorMessage);
+      console.error("Error starting scan:", error);
     } finally {
       setIsLoading(false);
     }
@@ -40,12 +42,10 @@ const Tools: React.FC = () => {
           clearInterval(interval);
         }
       } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : "An unknown error occurred.";
-        console.error(errorMessage);
+        console.error("Error fetching scan status:", error);
         clearInterval(interval);
       }
-    }, 2000); 
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [scanId]);
@@ -57,7 +57,7 @@ const Tools: React.FC = () => {
       case "FAILED":
         return "text-red-500";
       case "PENDING":
-        return "text-yellow-500"
+        return "text-yellow-500";
       case "RUNNING":
         return "text-blue-500";
       default:
@@ -65,11 +65,23 @@ const Tools: React.FC = () => {
     }
   };
 
+  if (!isAuthenticated) {
+    return (
+    <div id="error-pages">
+    <div className="error-page">
+      <h1>Error 401</h1>
+      <p>Uh-oh! We have unauthorized user here. How about we go home? :)</p>
+      <button className="error-back-button" onClick={() => navigate("/")}>
+        Back to Home
+      </button>
+    </div>
+  </div>
+    );
+  };
+
   return (
     <div className="scan-status">
       <h1 className="title">DAST URL Scanner</h1>
-
-      {/* Input Nama */}
       <div className="input-group">
         <input
           type="text"
@@ -79,8 +91,6 @@ const Tools: React.FC = () => {
           className="input-field"
         />
       </div>
-
-      {/* Input URL */}
       <div className="input-group">
         <input
           type="text"
@@ -90,8 +100,6 @@ const Tools: React.FC = () => {
           className="input-field"
         />
       </div>
-
-      {/* Button untuk memulai scan */}
       <div className="button-container">
         <button
           onClick={handleStartScan}
@@ -101,8 +109,6 @@ const Tools: React.FC = () => {
           {isLoading ? "Scanning..." : "Start Scan"}
         </button>
       </div>
-
-      {/* Menampilkan status */}
       {status && (
         <div className={`status ${getStatusColor()}`}>
           Status: {status.charAt(0).toUpperCase() + status.slice(1)}

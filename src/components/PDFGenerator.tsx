@@ -7,7 +7,7 @@ import {
   StyleSheet
 } from "@react-pdf/renderer";
 
-// Contoh jika Anda ingin menggunakan font kustom (opsional)
+// Contoh jika ingin menggunakan font kustom (opsional)
 // Font.register({
 //   family: "Roboto",
 //   src: "https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu72xKOzY.woff2",
@@ -99,7 +99,7 @@ const PDFGenerator: React.FC<ScanDetailsProps> = ({ name, status, tests }) => {
       fontFamily: "Courier",
       whiteSpace: "pre-wrap",
       wordWrap: "break-word",
-      marginTop: 10, // Tambahkan jarak antar elemen
+      marginTop: 10, 
       marginBottom:5,
     },
     footer: {
