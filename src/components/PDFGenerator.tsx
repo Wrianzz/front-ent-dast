@@ -95,9 +95,8 @@ const PDFGenerator: React.FC<ScanDetailsProps> = ({ name, status, tests }) => {
     codeBlock: {
       backgroundColor: "#f9f9f9",
       padding: 10,
-      fontSize: 8, // Reduced font size
+      fontSize: 8,
       fontFamily: "Courier",
-      //minHeight: 40,
       width: "100%",
     },
     codeText: {
@@ -126,7 +125,7 @@ const PDFGenerator: React.FC<ScanDetailsProps> = ({ name, status, tests }) => {
 
   const splitCodeText = (text: string) => {
     const maxCharsPerLine = 100;
-    const lines: string[] = []; // Menambahkan tipe eksplisit string[]
+    const lines: string[] = [];
     let currentLine = '';
   
     text.split('\n').forEach(line => {

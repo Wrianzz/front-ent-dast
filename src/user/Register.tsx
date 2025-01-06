@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../api/apiService";
-import Swal from "sweetalert2"; // Import SweetAlert2
+import Swal from "sweetalert2";
 
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+
+  // Fungsi untuk validasi password
+  const isPasswordValid = (password: string) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return passwordRegex.test(password);
+  };
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +24,16 @@ const RegisterPage: React.FC = () => {
         icon: "warning",
         title: "Missing Information",
         text: "Please provide all required fields.",
+      });
+      return;
+    }
+
+    // Validasi format password
+    if (!isPasswordValid(password)) {
+      Swal.fire({
+        icon: "error",
+        title: "Weak Password",
+        text: "Password must be at least 8 characters long, contain at least 1 uppercase letter, 1 number, and 1 special symbol.",
       });
       return;
     }
@@ -33,7 +49,7 @@ const RegisterPage: React.FC = () => {
     }
 
     try {
-      await registerUser(username, password); // Fungsi registrasi API
+      await registerUser(username, password); 
       Swal.fire({
         icon: "success",
         title: "Registration Successful",
